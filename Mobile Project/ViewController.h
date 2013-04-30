@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <opencv2/highgui/cap_ios.h>
+#import "OffloadHandler.h"
 
 @interface ViewController : UIViewController
 
+@property (retain, nonatomic) UIImage *srcImage;
+
+@property (retain, nonatomic) IBOutlet UIButton *originalButton;
+@property (retain, nonatomic) IBOutlet UIImageView *imageView;
+@property (retain, nonatomic) IBOutlet UIButton *greyButton;
+@property (retain, nonatomic) IBOutlet UIButton *edgeButton;
+
 @end
+

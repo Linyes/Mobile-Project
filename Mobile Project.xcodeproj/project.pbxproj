@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA403745172EFA6C000D5880 /* OffloadHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA403741172EFA6B000D5880 /* OffloadHandler.mm */; };
+		FA403747172EFD81000D5880 /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA403746172EFD81000D5880 /* Socket.cpp */; };
 		FAE1195F1729CDEF004115AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE1195E1729CDEF004115AB /* UIKit.framework */; };
 		FAE119611729CDEF004115AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE119601729CDEF004115AB /* Foundation.framework */; };
 		FAE119631729CDEF004115AB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE119621729CDEF004115AB /* CoreGraphics.framework */; };
@@ -17,10 +19,18 @@
 		FAE119731729CDF0004115AB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE119721729CDF0004115AB /* Default@2x.png */; };
 		FAE119751729CDF0004115AB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE119741729CDF0004115AB /* Default-568h@2x.png */; };
 		FAE119781729CDF0004115AB /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FAE119761729CDF0004115AB /* MainStoryboard.storyboard */; };
-		FAE1197B1729CDF0004115AB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FAE1197A1729CDF0004115AB /* ViewController.m */; };
+		FAE1197B1729CDF0004115AB /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = FAE1197A1729CDF0004115AB /* ViewController.mm */; };
+		FAE119821729CE9F004115AB /* DefaultSampleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE119811729CE9F004115AB /* DefaultSampleIcon.png */; };
+		FAE119861729D30A004115AB /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE119851729D30A004115AB /* opencv2.framework */; };
+		FAE119881729D385004115AB /* Lenna.png in Resources */ = {isa = PBXBuildFile; fileRef = FAE119871729D385004115AB /* Lenna.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA403741172EFA6B000D5880 /* OffloadHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OffloadHandler.mm; sourceTree = "<group>"; };
+		FA403742172EFA6B000D5880 /* OffloadHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OffloadHandler.h; sourceTree = "<group>"; };
+		FA403743172EFA6B000D5880 /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Socket.h; sourceTree = "<group>"; };
+		FA403744172EFA6C000D5880 /* SocketException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketException.h; sourceTree = "<group>"; };
+		FA403746172EFD81000D5880 /* Socket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Socket.cpp; sourceTree = "<group>"; };
 		FAE1195B1729CDEF004115AB /* Mobile Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mobile Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAE1195E1729CDEF004115AB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FAE119601729CDEF004115AB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -36,7 +46,10 @@
 		FAE119741729CDF0004115AB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		FAE119771729CDF0004115AB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		FAE119791729CDF0004115AB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		FAE1197A1729CDF0004115AB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		FAE1197A1729CDF0004115AB /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
+		FAE119811729CE9F004115AB /* DefaultSampleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DefaultSampleIcon.png; sourceTree = "<group>"; };
+		FAE119851729D30A004115AB /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../../Downloads/opencv2.framework; sourceTree = "<group>"; };
+		FAE119871729D385004115AB /* Lenna.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Lenna.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAE119861729D30A004115AB /* opencv2.framework in Frameworks */,
 				FAE1195F1729CDEF004115AB /* UIKit.framework in Frameworks */,
 				FAE119611729CDEF004115AB /* Foundation.framework in Frameworks */,
 				FAE119631729CDEF004115AB /* CoreGraphics.framework in Frameworks */,
@@ -73,6 +87,7 @@
 		FAE1195D1729CDEF004115AB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FAE119851729D30A004115AB /* opencv2.framework */,
 				FAE1195E1729CDEF004115AB /* UIKit.framework */,
 				FAE119601729CDEF004115AB /* Foundation.framework */,
 				FAE119621729CDEF004115AB /* CoreGraphics.framework */,
@@ -87,7 +102,12 @@
 				FAE1196E1729CDF0004115AB /* AppDelegate.m */,
 				FAE119761729CDF0004115AB /* MainStoryboard.storyboard */,
 				FAE119791729CDF0004115AB /* ViewController.h */,
-				FAE1197A1729CDF0004115AB /* ViewController.m */,
+				FAE1197A1729CDF0004115AB /* ViewController.mm */,
+				FA403741172EFA6B000D5880 /* OffloadHandler.mm */,
+				FA403742172EFA6B000D5880 /* OffloadHandler.h */,
+				FA403743172EFA6B000D5880 /* Socket.h */,
+				FA403746172EFD81000D5880 /* Socket.cpp */,
+				FA403744172EFA6C000D5880 /* SocketException.h */,
 				FAE119651729CDEF004115AB /* Supporting Files */,
 			);
 			path = "Mobile Project";
@@ -96,6 +116,8 @@
 		FAE119651729CDEF004115AB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FAE119871729D385004115AB /* Lenna.png */,
+				FAE119811729CE9F004115AB /* DefaultSampleIcon.png */,
 				FAE119661729CDEF004115AB /* Mobile Project-Info.plist */,
 				FAE119671729CDEF004115AB /* InfoPlist.strings */,
 				FAE1196A1729CDEF004115AB /* main.m */,
@@ -163,6 +185,8 @@
 				FAE119731729CDF0004115AB /* Default@2x.png in Resources */,
 				FAE119751729CDF0004115AB /* Default-568h@2x.png in Resources */,
 				FAE119781729CDF0004115AB /* MainStoryboard.storyboard in Resources */,
+				FAE119821729CE9F004115AB /* DefaultSampleIcon.png in Resources */,
+				FAE119881729D385004115AB /* Lenna.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,7 +199,9 @@
 			files = (
 				FAE1196B1729CDF0004115AB /* main.m in Sources */,
 				FAE1196F1729CDF0004115AB /* AppDelegate.m in Sources */,
-				FAE1197B1729CDF0004115AB /* ViewController.m in Sources */,
+				FAE1197B1729CDF0004115AB /* ViewController.mm in Sources */,
+				FA403745172EFA6C000D5880 /* OffloadHandler.mm in Sources */,
+				FA403747172EFD81000D5880 /* Socket.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +284,10 @@
 		FAE1197F1729CDF0004115AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Downloads\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mobile Project/Mobile Project-Prefix.pch";
 				INFOPLIST_FILE = "Mobile Project/Mobile Project-Info.plist";
@@ -269,6 +299,10 @@
 		FAE119801729CDF0004115AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../Downloads\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mobile Project/Mobile Project-Prefix.pch";
 				INFOPLIST_FILE = "Mobile Project/Mobile Project-Info.plist";
@@ -296,6 +330,7 @@
 				FAE119801729CDF0004115AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

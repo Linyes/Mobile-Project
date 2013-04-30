@@ -1,0 +1,17 @@
+Distributed systems Lab0
+
+Design:
+1. Client
+   Client first create a socket, and then it tries to connect to a server. Trough socket, it sends the request, including the name of the file it requests, to the server, and then apply accept operation to wait for the response from the server. If it receive a special message which represents that the request is denied, it'll let the user know that. Otherwise, it receives the file sent by the server. Then it close the socket and the client is shut down.
+
+2. Server
+   Server first create a socket, and then it binds the socket. The next step is to listen just in case client will try to connect. Then it enters a infinite loop(can be terminated by the message sent by the client, for example, exit message). It apply accept operation to establish the connection with a specific client. Then it receive the file name that the client requests. Then it enters the Cache mechanism. Through cache mechanism, it fnids out the file and send it back to the client, or it cannot find it and send back a special message. Then the server again apply accept operation to establish the connection with another specific client. The procedure repeats until it got the message indicating exit.
+
+3. Cache implementation
+   The server first check whether the file is in the cache. If it does, it outputs Cache hit and send back the file. If it doesn't, it try to find the file in the storage directory. It it does, it send back the file to the client. If it doesn't, it send back a special message indicating the request is denied by the server. The cache replaces the newest replaced files with the new file.
+
+Tested condition:
+Dead Server
+Unexisted file
+Invalid command-line argument
+Complex directory name
