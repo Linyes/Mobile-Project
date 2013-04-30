@@ -76,12 +76,18 @@
 	// Local computation //
 	///////////////////////
 	NSDate *start = [NSDate date];
+	cv::imwrite("tmp.png", gray);
 	cv::Canny(gray, edges, m_cannyLoThreshold, m_cannyHiThreshold, 3);
+	edges = cv::imread("tmp.png", 1);
 	
 	NSDate *end = [NSDate date];
+	
 	NSTimeInterval localTime = [end timeIntervalSince1970] - [start timeIntervalSince1970];
 	
 	NSLog(@"Local time is:%f", localTime);
+	
+	//Show output
+	cv::cvtColor(edges, outputMat, CV_GRAY2BGRA);
 	
 	////////////////////////
 	// Remote computation //
@@ -99,10 +105,6 @@
 	NSString *message = [NSString stringWithFormat:@"Local time is: %f\nNetwork time is: %f",localTime, networkTime];
 	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"!!Result!!" message:message delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:nil];
 	[alert show];
-	
-	
-	//Show output
-	cv::cvtColor(edges, outputMat, CV_GRAY2BGRA);
 	
 	[_imageView setImage:[self UIImageFromCVMat:outputMat]];
 }

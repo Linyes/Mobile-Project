@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA403745172EFA6C000D5880 /* OffloadHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = FA403741172EFA6B000D5880 /* OffloadHandler.mm */; };
+		FA403745172EFA6C000D5880 /* OffloadHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA403741172EFA6B000D5880 /* OffloadHandler.cpp */; };
 		FA403747172EFD81000D5880 /* Socket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA403746172EFD81000D5880 /* Socket.cpp */; };
 		FAE1195F1729CDEF004115AB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE1195E1729CDEF004115AB /* UIKit.framework */; };
 		FAE119611729CDEF004115AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAE119601729CDEF004115AB /* Foundation.framework */; };
@@ -26,7 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FA403741172EFA6B000D5880 /* OffloadHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OffloadHandler.mm; sourceTree = "<group>"; };
+		FA403741172EFA6B000D5880 /* OffloadHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OffloadHandler.cpp; sourceTree = "<group>"; };
 		FA403742172EFA6B000D5880 /* OffloadHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OffloadHandler.h; sourceTree = "<group>"; };
 		FA403743172EFA6B000D5880 /* Socket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Socket.h; sourceTree = "<group>"; };
 		FA403744172EFA6C000D5880 /* SocketException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SocketException.h; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 				FAE119761729CDF0004115AB /* MainStoryboard.storyboard */,
 				FAE119791729CDF0004115AB /* ViewController.h */,
 				FAE1197A1729CDF0004115AB /* ViewController.mm */,
-				FA403741172EFA6B000D5880 /* OffloadHandler.mm */,
+				FA403741172EFA6B000D5880 /* OffloadHandler.cpp */,
 				FA403742172EFA6B000D5880 /* OffloadHandler.h */,
 				FA403743172EFA6B000D5880 /* Socket.h */,
 				FA403746172EFD81000D5880 /* Socket.cpp */,
@@ -200,7 +200,7 @@
 				FAE1196B1729CDF0004115AB /* main.m in Sources */,
 				FAE1196F1729CDF0004115AB /* AppDelegate.m in Sources */,
 				FAE1197B1729CDF0004115AB /* ViewController.mm in Sources */,
-				FA403745172EFA6C000D5880 /* OffloadHandler.mm in Sources */,
+				FA403745172EFA6C000D5880 /* OffloadHandler.cpp in Sources */,
 				FA403747172EFD81000D5880 /* Socket.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,6 +284,7 @@
 		FAE1197F1729CDF0004115AB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nathen 赖 (VSCBKKDHM7)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Downloads\"",
@@ -292,6 +293,7 @@
 				GCC_PREFIX_HEADER = "Mobile Project/Mobile Project-Prefix.pch";
 				INFOPLIST_FILE = "Mobile Project/Mobile Project-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "498D27FC-2B05-499E-845C-EE2F7EFC4FE8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -299,6 +301,7 @@
 		FAE119801729CDF0004115AB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nathen 赖 (VSCBKKDHM7)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../Downloads\"",
@@ -307,6 +310,7 @@
 				GCC_PREFIX_HEADER = "Mobile Project/Mobile Project-Prefix.pch";
 				INFOPLIST_FILE = "Mobile Project/Mobile Project-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "498D27FC-2B05-499E-845C-EE2F7EFC4FE8";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

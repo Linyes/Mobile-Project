@@ -23,17 +23,15 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 {
 	//Canny(image, edges, threshold1, threashold2, apertureSize, L2gradient);
 	//return;
-	NSLog(@"test");
 	double serial = 0, transmit = 0;
 	clock_t start_time = 0, end_time = 0;
+	clock_t start_time_t = 0, end_time_t = 0;
 	
 	start_time = clock();
 	// the whole file is now loaded in the memory buffer.
-	Socket socket ("127.0.0.1", 30001);
-	
+	Socket socket ("209.2.47.149", 30001);
+//	Socket socket ("207.10.137.188", 9991);
 	imwrite("tmp.png", image);
-	
-	
 	
 	std::ifstream is ("tmp.png", std::ifstream::binary);
 	if (!is) {printf("Read error\n"); return;}
@@ -51,7 +49,7 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 		
 		serial = (double)end_time - start_time;
 		printf("time %f\n", serial);
-		start_time = clock();
+		start_time_t = clock();
 		::write(socket.m_sock, inBuffer, length);
 		printf("Send %d successfully!\n", length);
 	} else {
@@ -59,8 +57,8 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 		return;
 	}
 	
-	end_time = clock();
-	transmit += (double)end_time - start_time;
+	end_time_t = clock();
+	transmit += (double)end_time_t - start_time_t;
 	/*
 	char buffer[1024];
 	int input_fd;
@@ -75,33 +73,32 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 	///////////////////////////////
 	// receive and write to file //
 	///////////////////////////////
-	std::ofstream ofs("recv.png", std::ofstream::out | std::ofstream::trunc | std::ofstream::binary);
+	std::ofstream ofs("./recv.png", std::ofstream::out | std::ofstream::trunc | std::ofstream::binary);
 	ssize_t bytes_read;
 	char *buffer = new char[1024];
 	memset(buffer, 0, 1024);
-	while ((bytes_read = ::read(socket.m_sock, buffer, 1024)) > 0) {
-//		bytes_written = ::write(output_fd, &Buffer, (ssize_t) bytes_read);
-		start_time = clock();
+	while (true) {
+		start_time_t = clock();
+		bytes_read = ::read(socket.m_sock, buffer, 1024);
+		if (bytes_read <= 0) break;
+		end_time_t = clock();
+		transmit += (double)(end_time_t - start_time_t);
+		
+		
 		ofs.write(buffer, bytes_read);
-		end_time = clock();
-		serial += (double)end_time - start_time;
 		//if (bytes_written != bytes_read) perror("write error");
 	}
 	ofs.close();
 	
 	
-	start_time = clock();
 	edges = imread("recv.png", 1);
 	if (!edges.data) {std::cout << "imread error\n"; return;}
 	end_time = clock();
-	serial += (double)end_time - start_time;
+	serial += (double)(end_time - start_time);
 	
-	// terminate
-//	close(input_fd);
-//	ofs.close();
 	printf("Serialation time is %f\nTransmition time is %f\n", serial, transmit);
 	
-	Canny(image, edges, threshold1, threashold2, apertureSize, L2gradient);
+	//Canny(image, edges, threshold1, threashold2, apertureSize, L2gradient);
 	
 }
  void
