@@ -29,8 +29,8 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 	
 	start_time = clock();
 	// the whole file is now loaded in the memory buffer.
-	Socket socket ("209.2.47.149", 30001);
-//	Socket socket ("207.10.137.188", 9991);
+	Socket socket ("localhost", 30005);
+//	Socket socket ("ec2-54-242-96-206.compute-1.amazonaws.com", 9992);
 	imwrite("tmp.png", image);
 	
 	std::ifstream is ("tmp.png", std::ifstream::binary);
@@ -73,7 +73,7 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 	///////////////////////////////
 	// receive and write to file //
 	///////////////////////////////
-	std::ofstream ofs("./recv.png", std::ofstream::out | std::ofstream::trunc | std::ofstream::binary);
+	std::ofstream ofs("recv.png", std::ofstream::out | std::ofstream::trunc | std::ofstream::binary);
 	ssize_t bytes_read;
 	char *buffer = new char[1024];
 	memset(buffer, 0, 1024);

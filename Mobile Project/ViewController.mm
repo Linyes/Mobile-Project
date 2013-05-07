@@ -49,13 +49,21 @@
 //	if (!inputMat.data) {std::cout << "imread error\n"; return;}
 
 	
-	cv::Mat grayMat;
+	cv::Mat grayMat, edges, outputMat;
 	
 	cv::cvtColor(inputMat, grayMat, CV_BGR2GRAY);
 	
-	UIImage *grayImage = [self UIImageFromCVMat:grayMat];
+	cv::Canny(grayMat, edges, 250, 250, 3);
+
 	
-	[_imageView setImage:grayImage];
+	
+	//Show output
+	cv::cvtColor(edges, outputMat, CV_GRAY2BGRA);
+
+	[_imageView setImage:[self UIImageFromCVMat:outputMat]];
+	
+	//UIImage *grayImage = [self UIImageFromCVMat:grayMat];
+	//[_imageView setImage:grayImage];
 	
 }
 
@@ -76,18 +84,14 @@
 	// Local computation //
 	///////////////////////
 	NSDate *start = [NSDate date];
-	cv::imwrite("tmp.png", gray);
 	cv::Canny(gray, edges, m_cannyLoThreshold, m_cannyHiThreshold, 3);
-	edges = cv::imread("tmp.png", 1);
 	
 	NSDate *end = [NSDate date];
 	
 	NSTimeInterval localTime = [end timeIntervalSince1970] - [start timeIntervalSince1970];
 	
 	NSLog(@"Local time is:%f", localTime);
-	
-	//Show output
-	cv::cvtColor(edges, outputMat, CV_GRAY2BGRA);
+
 	
 	////////////////////////
 	// Remote computation //
@@ -106,7 +110,8 @@
 	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"!!Result!!" message:message delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:nil];
 	[alert show];
 	
-	[_imageView setImage:[self UIImageFromCVMat:outputMat]];
+	
+	[_imageView setImage:[self UIImageFromCVMat:edges]];
 }
 
 #pragma mark - openCV helper
