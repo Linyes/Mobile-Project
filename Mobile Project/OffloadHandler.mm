@@ -21,10 +21,10 @@ namespace cv
 void
 OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int apertureSize, bool L2gradient )
 {
-	printf("%s\n", OffloadHandler::getBasePath().c_str());
+	//printf("%s\n", OffloadHandler::getBasePath().c_str());
 	std::string basePath = OffloadHandler::getBasePath();
-	std::string tmpFile = basePath + "tmp.png";
-	return;
+	std::string tmpFile = basePath + "/tmp.png";
+	printf("%s\n", tmpFile.c_str());
 	//Canny(image, edges, threshold1, threashold2, apertureSize, L2gradient);
 	//return;
 	double serial = 0, transmit = 0;
@@ -33,12 +33,31 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 	
 	start_time = clock();
 	// the whole file is now loaded in the memory buffer.
-	Socket socket ("localhost", 30006);
+	Socket socket ("160.39.231.195", 30006);
 //	Socket socket ("ec2-54-242-96-206.compute-1.amazonaws.com", 9992);
-	imwrite("tmp.png", image);
+	if(imwrite(tmpFile, image)){
+		printf("imwrite success!\n");
+	} else {
+		printf("imwrite failed!\n");
+	}
 	
-	std::ifstream is ("tmp.png", std::ifstream::binary);
+/*
+	ssize_t bytes_r, bytes_w;
+	int in_fd = ::open(tmpFile.c_str(), O_RDONLY );
+	if ( in_fd == -1 ) perror( "open read files" );
+	
+	char *buffer = new char[1024];
+	memset( buffer, 0, 1024 );
+	while ( (bytes_r = ::read( in_fd, &buffer, 1024 ) ) > 0 ) {
+		bytes_w = ::write( socket.m_sock, &buffer, (ssize_t)bytes_r );
+		if (bytes_w != bytes_r) perror( "socket write error" );
+	}
+	close( in_fd );
+*/	
+	
+	std::ifstream is (tmpFile, std::ifstream::binary);
 	if (!is) {printf("Read error\n"); return;}
+	
 	
 	// get length of file:
 	is.seekg (0, is.end);
@@ -46,7 +65,7 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 	is.seekg (0, is.beg);
 	
 	char * inBuffer = new char [length];
-	
+	printf("lenght is %d", length);
 	is.read (inBuffer,length);
 	if (is){
 		end_time = clock();
@@ -60,7 +79,7 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 		printf("Send error!\n");
 		return;
 	}
-	
+
 	end_time_t = clock();
 	transmit += (double)end_time_t - start_time_t;
 	/*
@@ -77,7 +96,7 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 	///////////////////////////////
 	// receive and write to file //
 	///////////////////////////////
-	std::ofstream ofs("recv.png", std::ofstream::out | std::ofstream::trunc | std::ofstream::binary);
+	std::ofstream ofs(tmpFile, std::ofstream::out | std::ofstream::trunc | std::ofstream::binary);
 	ssize_t bytes_read;
 	char *buffer = new char[1024];
 	memset(buffer, 0, 1024);
@@ -95,7 +114,7 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 	ofs.close();
 	
 	
-	edges = imread("recv.png", 1);
+	edges = imread(tmpFile, 1);
 	if (!edges.data) {std::cout << "imread error\n"; return;}
 	end_time = clock();
 	serial += (double)(end_time - start_time);

@@ -25,7 +25,7 @@ Socket::Socket( std::string host, int port ) :
 	
 	if ( ! Socket::connect ( host, port ) )
 	{
-		throw SocketException ( "Could not bind to port." );
+		throw SocketException ( "Could not connect to port." );
 	}
 
 }

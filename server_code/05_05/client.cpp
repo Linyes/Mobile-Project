@@ -51,7 +51,7 @@ int main ( int argc, char **argv ) {
 	// send to server //
 	////////////////////
 	std::ifstream is ("tmp.png", std::ifstream::binary);
-	if (!is) {printf("Read error\n"); return;}
+	if (!is) {printf("Read error\n"); return 0;}
 	
 	// get length of file:
 	is.seekg (0, is.end);
@@ -66,7 +66,7 @@ int main ( int argc, char **argv ) {
 		printf("Send %d successfully!\n", length);
 	} else {
 		printf("Send error!\n");
-		return;
+		return 0;
 	}
 
 
