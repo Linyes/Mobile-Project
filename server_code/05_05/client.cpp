@@ -46,37 +46,46 @@ int main ( int argc, char **argv ) {
 	if ( connect(sockfd,(struct sockaddr *) &s_addr ,sizeof(s_addr) ) < 0) 
 		perror("ERROR connecting");
 
-	char buffer[101];
 
-	ssize_t bytes_r, bytes_w;
-
-
+	////////////////////
+	// send to server //
+	////////////////////
+	std::ifstream is ("tmp.png", std::ifstream::binary);
+	if (!is) {printf("Read error\n"); return;}
 	
-	int in_fd = open( "lena.jpg", O_RDONLY );
-	if ( in_fd == -1 ) perror("open read file");
-
-	int kk = 0;
-	while ( (bytes_r = read( in_fd, &buffer, 100 ) ) > 0 ) {
-		cout << kk++ << endl;
-		bytes_w = write( sockfd, &buffer, bytes_r );
-		if (bytes_w != bytes_r) perror("write error");
+	// get length of file:
+	is.seekg (0, is.end);
+	int length = is.tellg();
+	is.seekg (0, is.beg);
+	
+	char * inBuffer = new char [length];
+	
+	is.read (inBuffer,length);
+	if (is){
+		write(sockfd, inBuffer, length);
+		printf("Send %d successfully!\n", length);
+	} else {
+		printf("Send error!\n");
+		return;
 	}
 
-	close( in_fd );
 
-	cout << "finish sending to server" << endl;
-
-
-
-	int out_fd = open("from_server.jpg", O_WRONLY | O_CREAT, 0644);
-	if (out_fd == -1) perror("open file error");
-
-	memset( buffer, 0, 101 );
-	while ( (bytes_r = read( sockfd, &buffer, 100)) > 0 ) {
-		bytes_w = write( out_fd, &buffer, (ssize_t) bytes_r);
-		if (bytes_w != bytes_r) perror("write error");
+	///////////////////////////////
+	// receive and write to file //
+	///////////////////////////////
+	std::ofstream ofs("recv.png", std::ofstream::out | std::ofstream::trunc | std::ofstream::binary);
+	ssize_t bytes_read;
+	char *buffer = new char[1024];
+	memset(buffer, 0, 1024);
+	while (true) {
+		bytes_read = ::read(sockfd, buffer, 1024);
+		if (bytes_read <= 0) break;
+		
+		
+		ofs.write(buffer, bytes_read);
+		//if (bytes_written != bytes_read) perror("write error");
 	}
-	close( out_fd );
+	ofs.close();
 	close( sockfd );
 	cout << "finish receiving from server" << endl;
 

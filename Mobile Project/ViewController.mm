@@ -62,6 +62,18 @@
 
 	[_imageView setImage:[self UIImageFromCVMat:outputMat]];
 	
+	[UIDevice currentDevice].batteryMonitoringEnabled = YES;
+	float level = [[UIDevice currentDevice] batteryLevel];
+	NSString *battery = [NSString stringWithFormat:@"%u", NSDocumentDirectory];
+	
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+	
+	NSLog(@"%u",NSDocumentDirectory);
+	
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"!!Result!!" message:basePath delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:nil];
+	[alert show];
+	
 	//UIImage *grayImage = [self UIImageFromCVMat:grayMat];
 	//[_imageView setImage:grayImage];
 	
@@ -84,8 +96,38 @@
 	// Local computation //
 	///////////////////////
 	NSDate *start = [NSDate date];
-	cv::Canny(gray, edges, m_cannyLoThreshold, m_cannyHiThreshold, 3);
+//	cv::Canny(gray, edges, m_cannyLoThreshold, m_cannyHiThreshold, 3);
+	//////////////////////////////////////////////////////////////////
+	//								//
+	//	here goes the OpenCV codes to process images		//
+	//								//
+	//////////////////////////////////////////////////////////////////
+	cv::Mat grad;
 	
+	int scale = 1;
+	int delta = 0;
+	int ddepth = CV_16S;
+	
+	GaussianBlur( src, src, cv::Size(3,3), 0, 0, cv::BORDER_DEFAULT );
+	
+	/// Convert it to gray
+	cvtColor( src, gray, cv::COLOR_RGB2GRAY );
+	
+	/// Generate grad_x and grad_y
+	cv::Mat grad_x, grad_y;
+	cv::Mat abs_grad_x, abs_grad_y;
+	
+	/// Gradient X
+	Sobel( gray, grad_x, ddepth, 1, 0, 3, scale, delta, cv::BORDER_DEFAULT );
+	convertScaleAbs( grad_x, abs_grad_x );
+	
+	/// Gradient Y
+	Sobel( gray, grad_y, ddepth, 0, 1, 3, scale, delta, cv::BORDER_DEFAULT );
+	convertScaleAbs( grad_y, abs_grad_y );
+	
+	/// Total Gradient (approximate)
+	addWeighted( abs_grad_x, 0.5, abs_grad_y, 0.5, 0, grad );
+		
 	NSDate *end = [NSDate date];
 	
 	NSTimeInterval localTime = [end timeIntervalSince1970] - [start timeIntervalSince1970];
@@ -107,6 +149,11 @@
 	NSLog(@"Network time is:%f", networkTime);
 	
 	NSString *message = [NSString stringWithFormat:@"Local time is: %f\nNetwork time is: %f",localTime, networkTime];
+	
+	[UIDevice currentDevice].batteryMonitoringEnabled = YES;
+	float level = [[UIDevice currentDevice] batteryLevel];
+	NSString *battery = [NSString stringWithFormat:@"%f", level];
+	
 	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"!!Result!!" message:message delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:nil];
 	[alert show];
 	

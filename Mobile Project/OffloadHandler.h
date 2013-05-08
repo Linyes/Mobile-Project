@@ -20,7 +20,8 @@ namespace cv
 		Mat
 		imageProcess(Mat input);
 		
-		
+		static std::string
+		getBasePath();
 		
 		
 		void

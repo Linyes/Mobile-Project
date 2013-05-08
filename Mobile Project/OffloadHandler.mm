@@ -21,6 +21,10 @@ namespace cv
 void
 OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int apertureSize, bool L2gradient )
 {
+	printf("%s\n", OffloadHandler::getBasePath().c_str());
+	std::string basePath = OffloadHandler::getBasePath();
+	std::string tmpFile = basePath + "tmp.png";
+	return;
 	//Canny(image, edges, threshold1, threashold2, apertureSize, L2gradient);
 	//return;
 	double serial = 0, transmit = 0;
@@ -29,7 +33,7 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 	
 	start_time = clock();
 	// the whole file is now loaded in the memory buffer.
-	Socket socket ("localhost", 30005);
+	Socket socket ("localhost", 30006);
 //	Socket socket ("ec2-54-242-96-206.compute-1.amazonaws.com", 9992);
 	imwrite("tmp.png", image);
 	
@@ -101,6 +105,19 @@ OffloadCanny(Mat& image, Mat& edges, double threshold1, double threashold2, int 
 	//Canny(image, edges, threshold1, threashold2, apertureSize, L2gradient);
 	
 }
+	
+std::string
+OffloadHandler::getBasePath()
+{
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+	NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+	
+	std::string *result = new std::string([basePath UTF8String]);
+	
+	return *result;
+	
+}
+	
  void
 OffloadHandler::stringProcess(std::string input)
 {
