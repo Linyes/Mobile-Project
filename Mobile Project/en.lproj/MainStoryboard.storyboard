@@ -34,9 +34,6 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t62-6n-c5j">
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="H5v-Qj-V6h"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Original">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -62,6 +59,22 @@
                                     <action selector="edgeDetection:" destination="2" eventType="touchUpInside" id="6Sv-KC-t1D"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6oM-Y0-gIA">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="MaW-Ju-RZy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Carton">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="cartonFilter:" destination="2" eventType="touchUpInside" id="acC-6x-Cm6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -70,13 +83,17 @@
                             <constraint firstAttribute="bottom" secondItem="3tX-nk-YVo" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="GZx-bI-gb0"/>
                             <constraint firstItem="MJ0-V4-McE" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="O6Z-Bc-BwO"/>
                             <constraint firstItem="t62-6n-c5j" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="XdK-YL-QBM"/>
+                            <constraint firstItem="t62-6n-c5j" firstAttribute="trailing" secondItem="6oM-Y0-gIA" secondAttribute="trailing" type="default" id="XpW-sE-iJ7"/>
                             <constraint firstAttribute="bottom" secondItem="t62-6n-c5j" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="ilV-Id-rnf"/>
                             <constraint firstItem="MJ0-V4-McE" firstAttribute="top" secondItem="3" secondAttribute="top" constant="13" id="jPE-Kd-17S"/>
+                            <constraint firstItem="6oM-Y0-gIA" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="oog-P8-qha"/>
+                            <constraint firstItem="t62-6n-c5j" firstAttribute="top" secondItem="6oM-Y0-gIA" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="qZD-xy-X9v"/>
                             <constraint firstAttribute="bottom" secondItem="r8w-27-po7" secondAttribute="bottom" constant="20" symbolic="YES" type="default" id="rEt-oI-UoL"/>
                             <constraint firstAttribute="trailing" secondItem="MJ0-V4-McE" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="rdH-Fi-OUI"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cartonButton" destination="6oM-Y0-gIA" id="UMH-D2-agr"/>
                         <outlet property="edgeButton" destination="r8w-27-po7" id="dMK-X2-BG2"/>
                         <outlet property="greyButton" destination="3tX-nk-YVo" id="miU-QZ-u1v"/>
                         <outlet property="imageView" destination="MJ0-V4-McE" id="f4M-gc-Q0n"/>
@@ -94,6 +111,7 @@
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="cartonButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="edgeButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="greyButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>

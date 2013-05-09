@@ -36,4 +36,8 @@ namespace cv
 	OffloadCanny( Mat& image, Mat& edges,
 		     double threshold1, double threshold2,
 		     int apertureSize=3, bool L2gradient=false );
+	
+	void
+	OffloadPyrMeanShiftFiltering( Mat& src, Mat& dst,
+				   double sp, double sr);
 }

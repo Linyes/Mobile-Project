@@ -18,6 +18,7 @@
 @property (retain, nonatomic) IBOutlet UIImageView *imageView;
 @property (retain, nonatomic) IBOutlet UIButton *greyButton;
 @property (retain, nonatomic) IBOutlet UIButton *edgeButton;
+@property (retain, nonatomic) IBOutlet UIButton *cartonButton;
 
 @end
 

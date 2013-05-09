@@ -37,6 +37,7 @@
 	[_greyButton release];
 	[_originalButton release];
 	[_edgeButton release];
+    [_cartonButton release];
     [super dealloc];
 }
 
@@ -81,6 +82,66 @@
 
 - (IBAction)changeToOrin:(id)sender {
 	[_imageView setImage:[UIImage imageNamed:@"Lenna.png"]];
+}
+
+- (IBAction)cartonFilter:(id)sender {
+	///////////////////////
+	// Local computation //
+	///////////////////////
+	NSDate *start = [NSDate date];
+	cv::Mat src, gray, bgr, edges, edgesBgr, outputFrame;
+	src = [self cvMatFromUIImage:_srcImage];
+	
+	cvtColor(src, bgr, CV_BGRA2BGR);
+	pyrMeanShiftFiltering(bgr.clone(), bgr, 15, 40);
+	
+	cv::cvtColor(bgr, gray, CV_BGR2GRAY);
+	cv::Canny(gray, edges, 150, 150);
+	
+	cv::cvtColor(edges, edgesBgr, CV_GRAY2BGR);
+	
+	bgr = bgr - edgesBgr;
+	
+	cv::cvtColor(bgr, outputFrame, CV_BGR2BGRA);
+	
+	NSDate *end = [NSDate date];
+	
+	NSTimeInterval localTime = [end timeIntervalSince1970] - [start timeIntervalSince1970];
+	
+	NSLog(@"Local time is:%f", localTime);
+	
+	////////////////////////
+	// Remote computation //
+	////////////////////////
+	NSDate *n_start = [NSDate date];
+	
+	cvtColor(src, bgr, CV_BGRA2BGR);
+	cv::Mat tmp = bgr.clone();
+	
+	cv::OffloadPyrMeanShiftFiltering(tmp, bgr, 15, 40);
+	
+	cv::cvtColor(bgr, gray, CV_BGR2GRAY);
+	cv::Canny(gray, edges, 150, 150);
+	
+	cv::cvtColor(edges, edgesBgr, CV_GRAY2BGR);
+	
+	bgr = bgr - edgesBgr;
+	
+	cv::cvtColor(bgr, outputFrame, CV_BGR2BGRA);
+	
+	NSDate *n_end = [NSDate date];
+	NSTimeInterval networkTime = [n_end timeIntervalSince1970] - [n_start timeIntervalSince1970];
+	
+	NSLog(@"Network time is:%f", networkTime);
+	NSString *message = [NSString stringWithFormat:@"Local time is: %f\nNetwork time is: %f",localTime, networkTime];
+		
+	UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"!!Result!!" message:message delegate:self cancelButtonTitle:@"Continue" otherButtonTitles:nil];
+	[alert show];
+	
+	
+	[_imageView setImage:[self UIImageFromCVMat:edges]];
+	[_imageView setImage:[self UIImageFromCVMat:outputFrame]];
+
 }
 
 - (IBAction)edgeDetection:(id)sender {
@@ -139,9 +200,8 @@
 	// Remote computation //
 	////////////////////////
 	start = [NSDate date];
-//	for (int i = 0; i < 1000; i++) {
-		cv::OffloadCanny(gray, edges, m_cannyLoThreshold, m_cannyHiThreshold);
-//	}
+	
+	cv::OffloadCanny(gray, edges, m_cannyLoThreshold, m_cannyHiThreshold);
 	
 	end = [NSDate date];
 	NSTimeInterval networkTime = [end timeIntervalSince1970] - [start timeIntervalSince1970];
